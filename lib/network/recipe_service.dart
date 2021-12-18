@@ -1,12 +1,13 @@
 // 1
+
 import 'package:chopper/chopper.dart';
 import 'recipe_model.dart';
 import 'model_response.dart';
 import 'model_converter.dart';
-
+part 'recipe_service.chopper.dart';
 // 2
 const String apiKey = '66bb41e4d7d1043d800c3e2e6313fbee';
-const String apiId = '<1b438e7a';
+const String apiId = '1b438e7a';
 // 3
 const String apiUrl = 'https://api.edamam.com';
 
@@ -20,7 +21,26 @@ abstract class RecipeService extends ChopperService {
   Future<Response<Result<APIRecipeQuery>>> queryRecipes(
       // 5
       @Query('q') String query, @Query('from') int from, @Query('to') int to);
-// TODO: Add create()
+  static RecipeService create() {
+    // 1
+    final client = ChopperClient(
+      // 2
+      baseUrl: apiUrl,
+      // 3
+      interceptors: [_addQuery, HttpLoggingInterceptor()],
+      // 4
+      converter: ModelConverter(),
+      // 5
+      errorConverter: const JsonConverter(),
+      // 6
+      services: [
+        _$RecipeService(),
+      ],
+    );
+    // 7
+    return _$RecipeService(client);
+  }
+
 }
 Request _addQuery(Request req) {
   // 1

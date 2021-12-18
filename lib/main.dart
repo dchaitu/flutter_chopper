@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:logging/logging.dart';
 import 'ui/main_screen.dart';
 
 Future<void> main() async {
@@ -9,7 +9,13 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-// TODO: Add _setupLogging()
+void _setupLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
