@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 import 'ui/main_screen.dart';
 
 Future<void> main() async {
-  // TODO: Call _setupLogging()
+  _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
